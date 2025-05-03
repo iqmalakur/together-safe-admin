@@ -15,6 +15,12 @@ export const NAV_DATA = [
         ],
       },
       {
+        title: "Insiden",
+        url: "/incidents",
+        icon: Icons.FourCircle,
+        items: [],
+      },
+      {
         title: "Calendar",
         url: "/calendar",
         icon: Icons.Calendar,
