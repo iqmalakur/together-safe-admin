@@ -2,6 +2,36 @@ import { SVGProps } from "react";
 
 export type PropsType = SVGProps<SVGSVGElement>;
 
+export function ExclamationIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      {...props}
+    >
+      <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2c4.418 0 8 3.582 8 8s-3.582 8-8 8-8-3.582-8-8 3.582-8 8-8zm0 4a1 1 0 00-1 1v5a1 1 0 002 0v-5a1 1 0 00-1-1zm0 9a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z" />
+    </svg>
+  );
+}
+
+export function ReportIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      {...props}
+    >
+      <path d="M19 2H5a2 2 0 00-2 2v16a2 2 0 002 2h14a2 2 0 002-2V4a2 2 0 00-2-2zM5 4h14v16H5V4zm4 4a1 1 0 011 1v5a1 1 0 11-2 0V9a1 1 0 011-1zm5 0a1 1 0 011 1v5a1 1 0 11-2 0V9a1 1 0 011-1zm-5 11a1 1 0 100-2 1 1 0 000 2zm5 0a1 1 0 100-2 1 1 0 000 2z" />
+    </svg>
+  );
+}
+
 export function ChevronUp(props: PropsType) {
   return (
     <svg
