@@ -1,14 +1,10 @@
 import { PaymentsOverview } from "@/components/Charts/payments-overview";
 import { UsedDevices } from "@/components/Charts/used-devices";
 import { WeeksProfit } from "@/components/Charts/weeks-profit";
-import { TopChannels } from "@/components/Tables/top-channels";
-import { TopChannelsSkeleton } from "@/components/Tables/top-channels/skeleton";
 import { createTimeFrameExtractor } from "@/utils/timeframe-extractor";
 import { Suspense } from "react";
-import { ChatsCard } from "./_components/chats-card";
 import { OverviewCardsGroup } from "./_components/overview-cards";
 import { OverviewCardsSkeleton } from "./_components/overview-cards/skeleton";
-import { RegionLabels } from "./_components/region-labels";
 
 type PropsType = {
   searchParams: Promise<{
@@ -44,18 +40,6 @@ export default async function Home({ searchParams }: PropsType) {
           key={extractTimeFrame("used_devices")}
           timeFrame={extractTimeFrame("used_devices")?.split(":")[1]}
         />
-
-        <RegionLabels />
-
-        <div className="col-span-12 grid xl:col-span-8">
-          <Suspense fallback={<TopChannelsSkeleton />}>
-            <TopChannels />
-          </Suspense>
-        </div>
-
-        <Suspense fallback={null}>
-          <ChatsCard />
-        </Suspense>
       </div>
     </>
   );

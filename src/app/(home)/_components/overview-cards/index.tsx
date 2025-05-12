@@ -1,45 +1,47 @@
 import { compactFormat } from "@/lib/format-number";
-import { getOverviewData } from "../../fetch";
 import { OverviewCard } from "./card";
 import * as icons from "./icons";
+import { getPrismaClient } from "@/utils/prisma";
 
 export async function OverviewCardsGroup() {
-  const { views, profit, products, users } = await getOverviewData();
+  const prisma = getPrismaClient();
+  const totalIncidents = await prisma.incident.count();
+  const totalActiveIncidents = await prisma.incident.count({
+    where: { status: "active" },
+  });
+  const totalReports = await prisma.report.count();
+  const totalUsers = await prisma.user.count();
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4 2xl:gap-7.5">
       <OverviewCard
-        label="Total Views"
+        label="Total Insiden"
         data={{
-          ...views,
-          value: compactFormat(views.value),
+          value: compactFormat(totalIncidents),
         }}
-        Icon={icons.Views}
+        Icon={icons.TotalIncident}
       />
 
       <OverviewCard
-        label="Total Profit"
+        label="Total Insiden Aktif"
         data={{
-          ...profit,
-          value: "$" + compactFormat(profit.value),
+          value: compactFormat(totalActiveIncidents),
         }}
-        Icon={icons.Profit}
+        Icon={icons.ActiveIncidentIcon}
       />
 
       <OverviewCard
-        label="Total Products"
+        label="Total Laporan Insiden"
         data={{
-          ...products,
-          value: compactFormat(products.value),
+          value: compactFormat(totalReports),
         }}
-        Icon={icons.Product}
+        Icon={icons.TotalReport}
       />
 
       <OverviewCard
         label="Total Users"
         data={{
-          ...users,
-          value: compactFormat(users.value),
+          value: compactFormat(totalUsers),
         }}
         Icon={icons.Users}
       />

@@ -2,6 +2,42 @@ import type { SVGProps } from "react";
 
 type SVGPropsType = SVGProps<SVGSVGElement>;
 
+export function TotalIncident(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg width={58} height={58} viewBox="0 0 58 58" fill="none" {...props}>
+      <circle cx={29} cy={29} r={29} fill="#FFA726" />
+      <path
+        d="M29 18.125a2.188 2.188 0 012.188 2.188v13.75a2.188 2.188 0 11-4.376 0v-13.75A2.188 2.188 0 0129 18.125zm0 22.5a2.188 2.188 0 110-4.376 2.188 2.188 0 010 4.376z"
+        fill="#fff"
+      />
+    </svg>
+  );
+}
+
+export function TotalReport(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg width={58} height={58} viewBox="0 0 58 58" fill="none" {...props}>
+      <circle cx={29} cy={29} r={29} fill="#3FD97F" />
+      <path
+        d="M20.5 16.5h17a2.5 2.5 0 012.5 2.5v20a2.5 2.5 0 01-2.5 2.5h-17a2.5 2.5 0 01-2.5-2.5v-20a2.5 2.5 0 012.5-2.5zm5.5 3.75a1.25 1.25 0 00-1.25 1.25v10a1.25 1.25 0 102.5 0v-10a1.25 1.25 0 00-1.25-1.25zm7.5 0a1.25 1.25 0 00-1.25 1.25v10a1.25 1.25 0 102.5 0v-10a1.25 1.25 0 00-1.25-1.25zm-3.75 15.625a1.875 1.875 0 100-3.75 1.875 1.875 0 000 3.75z"
+        fill="#fff"
+      />
+    </svg>
+  );
+}
+
+export function ActiveIncidentIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg width={58} height={58} viewBox="0 0 58 58" fill="none" {...props}>
+      <circle cx={29} cy={29} r={29} fill="#FF5252" />
+      <path
+        d="M29 18.125a2.188 2.188 0 012.188 2.188v13.75a2.188 2.188 0 11-4.376 0v-13.75A2.188 2.188 0 0129 18.125zm0 22.5a2.188 2.188 0 110-4.376 2.188 2.188 0 010 4.376z"
+        fill="#fff"
+      />
+    </svg>
+  );
+}
+
 export function Views(props: SVGPropsType) {
   return (
     <svg width={58} height={58} viewBox="0 0 58 58" fill="none" {...props}>
