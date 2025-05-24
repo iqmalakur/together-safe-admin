@@ -17,9 +17,7 @@ model User {
   email        String    @id @db.VarChar(320)
   name         String    @db.VarChar(100)
   password     String    @db.VarChar(255)
-  phone        String    @db.VarChar(15)
   profilePhoto String?   @db.VarChar(2083) @map("profile_photo")
-  reputation   Int       @default(0)
 
   reports      Report[]
   comments     Comment[]
@@ -33,9 +31,8 @@ model Report {
   longitude   Float
   date        DateTime         @db.Date
   time        DateTime         @db.Time
-  status      ReportStatus     @default(pending)
+  isAnonymous Boolean          @default(false) @map("is_anonymous")
   createdAt   DateTime         @db.Timestamp() @default(now()) @map("created_at")
-  deletedAt   DateTime?        @db.Timestamp() @map("deleted_at")
 
   userEmail   String           @db.VarChar(320) @map("user_email")
   user        User             @relation(fields: [userEmail], references: [email])
@@ -51,13 +48,13 @@ model Report {
 model Incident {
   id         String                               @id @default(uuid()) @db.Uuid()
   riskLevel  RiskLevel                            @map("risk_level")
-  status     IncidentStatus
+  status     IncidentStatus                       @default(pending)
   createdAt  DateTime                             @db.Timestamp() @default(now()) @map("created_at")
   updatedAt  DateTime                             @db.Timestamp() @default(now()) @map("updated_at")
 
   radius     Int
   location   Unsupported("geometry(Point, 4326)") @map("location")
-  
+
   dateStart  DateTime                             @db.Date @map("date_start")
   dateEnd    DateTime                             @db.Date @map("date_end")
 
@@ -71,10 +68,14 @@ model Incident {
 }
 
 model IncidentCategory {
-  id        Int        @id @default(autoincrement())
-  name      String     @db.VarChar(100)
+  id           Int                          @id @default(autoincrement())
+  name         String                       @db.VarChar(100)
+  minRiskLevel RiskLevel                    @map("min_risk_level")
+  maxRiskLevel RiskLevel                    @map("max_risk_level")
+  ttlDate      Unsupported("INTERVAL DAY")  @map("ttl_date")
+  ttlTime      Unsupported("INTERVAL HOUR") @map("ttl_time")
 
-  incidents Incident[]
+  incidents    Incident[]
 }
 
 model Attachment {
@@ -90,7 +91,7 @@ model Comment {
   comment   String    @db.Text
   createdAt DateTime  @db.Timestamp() @default(now()) @map("created_at")
   updatedAt DateTime  @db.Timestamp() @default(now()) @map("updated_at")
-  
+
   userEmail String    @map("user_email")
   user      User      @relation(fields: [userEmail], references: [email])
 
@@ -130,13 +131,10 @@ enum RiskLevel {
   low
 }
 
-enum ReportStatus {
-  verified
-  pending
-  invalid
-}
-
 enum IncidentStatus {
-  active
-  non_active
+  admin_verified
+  admin_rejected
+  admin_resolved
+  pending
+  verified
 }
