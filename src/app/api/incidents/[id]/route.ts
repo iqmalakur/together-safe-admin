@@ -70,19 +70,20 @@ export async function PATCH(
 ) {
   const { id } = await params;
   const body = await req.json();
-  const { status } = body;
-
-  if (!status) {
-    return NextResponse.json({ error: "Status is required" }, { status: 400 });
-  }
+  const { status, riskLevel } = body;
 
   try {
+    let update = "";
+
+    if (status) update += `status = '${status}'::"IncidentStatus",`;
+    if (riskLevel) update += `risk_level = '${riskLevel}'::"RiskLevel",`;
+
     const prisma = getPrismaClient();
-    const updated = await prisma.$executeRaw`
+    const updated = await prisma.$executeRawUnsafe(`
       UPDATE "Incident"
-        SET status = ${status}::"IncidentStatus"
-      WHERE id = ${id}::uuid
-    `;
+        SET ${update} updated_at = NOW()
+      WHERE id = '${id}'::uuid
+    `);
 
     return NextResponse.json({ message: "Status updated", data: updated });
   } catch (error) {

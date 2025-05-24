@@ -16,7 +16,7 @@ export async function GET() {
         CONCAT(ST_Y(location), ',', ST_X(location)) as location
       FROM "Incident" i
       JOIN "IncidentCategory" c ON i.category_id = c.id
-      ORDER BY i.created_at DESC
+      ORDER BY i.updated_at DESC
       LIMIT 10;
     `;
 

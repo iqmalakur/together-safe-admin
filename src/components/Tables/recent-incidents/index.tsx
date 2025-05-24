@@ -10,7 +10,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { capitalize } from "@/utils/common";
 import Link from "next/link";
 import { RecentIncident } from "@/types/incident-type";
 
@@ -58,15 +57,35 @@ export function RecentIncidents() {
                 {index + 1}
               </TableCell>
               <TableCell>{incident.category}</TableCell>
-              <TableCell>{capitalize(incident.risk_level)}</TableCell>
+              <TableCell>
+                <Select
+                  label=""
+                  items={[
+                    { label: "Tinggi", value: "high" },
+                    { label: "Sedang", value: "medium" },
+                    { label: "Rendah", value: "low" },
+                  ]}
+                  defaultValue={incident.risk_level}
+                  onChange={(value) => {
+                    fetch(`/api/incidents/${incident.id}`, {
+                      method: "PATCH",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ riskLevel: value }),
+                    });
+                  }}
+                />
+              </TableCell>
               <TableCell>{incident.date}</TableCell>
               <TableCell>{incident.time}</TableCell>
               <TableCell>
                 <Select
                   label=""
                   items={[
-                    { label: "Active", value: "active" },
-                    { label: "Non Active", value: "non_active" },
+                    { label: "Diverifikasi Admin", value: "admin_verified" },
+                    { label: "Ditolak Admin", value: "admin_rejected" },
+                    { label: "Telah Ditangani", value: "admin_resolved" },
+                    { label: "Pending", value: "pending" },
+                    { label: "Terverifikasi", value: "verified" },
                   ]}
                   defaultValue={incident.status}
                   onChange={(value) => {

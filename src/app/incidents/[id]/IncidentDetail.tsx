@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getRiskLevel, getStatus } from "@/utils/common";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 
@@ -64,8 +65,8 @@ const IncidentDetail: FC<IncidentDetailProps> = ({ incidentId }) => {
         <h2 className="text-2xl font-bold text-dark dark:text-white">
           Incident Details
         </h2>
-        <p>Risk Level: {incident.risklevel}</p>
-        <p>Status: {incident.status}</p>
+        <p>Risk Level: {getRiskLevel(incident.risklevel)}</p>
+        <p>Status: {getStatus(incident.status)}</p>
         <p>Start Date: {incident.datestart}</p>
         <p>End Date: {incident.dateend}</p>
         <p>Start Time: {incident.timestart}</p>
