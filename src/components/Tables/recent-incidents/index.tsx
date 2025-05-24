@@ -44,6 +44,7 @@ export function RecentIncidents() {
             <TableHead>Rentang Waktu</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Lokasi</TableHead>
+            <TableHead>Aksi</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -84,6 +85,14 @@ export function RecentIncidents() {
                   className="text-primary"
                 >
                   Lihat
+                </Link>
+              </TableCell>
+              <TableCell>
+                <Link
+                  href={`/incidents/${incident.id}`}
+                  className="text-primary"
+                >
+                  Detail
                 </Link>
               </TableCell>
             </TableRow>
