@@ -3,10 +3,11 @@ import { RecentIncidentsSkeleton } from "@/components/Tables/recent-incidents/sk
 
 import { Metadata } from "next";
 import { FC, Suspense } from "react";
-import IncidentDetail from "./IncidentDetail";
+import IncidentDetail from "./ReportDetail";
+import ReportDetail from "./ReportDetail";
 
 export const metadata: Metadata = {
-  title: "Incidents",
+  title: "Reports",
 };
 
 const IncidentDetailPage: FC<{ params: { id: string } }> = async ({
@@ -20,7 +21,7 @@ const IncidentDetailPage: FC<{ params: { id: string } }> = async ({
 
       <div className="space-y-10">
         <Suspense fallback={<RecentIncidentsSkeleton />}>
-          <IncidentDetail incidentId={id} />
+          <ReportDetail reportId={id} />
         </Suspense>
       </div>
     </>

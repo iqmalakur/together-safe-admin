@@ -87,10 +87,7 @@ export default function AdminReports() {
                 </Link>
               </TableCell>
               <TableCell>
-                <Link
-                  href={`/admin/reports/${report.id}`}
-                  className="text-primary"
-                >
+                <Link href={`/reports/${report.id}`} className="text-primary">
                   Detail
                 </Link>
               </TableCell>
