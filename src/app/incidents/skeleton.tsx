@@ -13,7 +13,7 @@ export function RecentIncidentsSkeleton() {
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="px-6 py-4 sm:px-7 sm:py-5 xl:px-8.5">
         <h2 className="text-2xl font-bold text-dark dark:text-white">
-          Insiden Terbaru
+          Daftar Insiden
         </h2>
       </div>
 
@@ -23,17 +23,18 @@ export function RecentIncidentsSkeleton() {
             <TableHead className="pl-5 sm:pl-6 xl:pl-7.5">#</TableHead>
             <TableHead>Kategori</TableHead>
             <TableHead>Tingkat Risiko</TableHead>
-            <TableHead>Rentang Tanggal</TableHead>
-            <TableHead>Rentang Waktu</TableHead>
+            <TableHead>Tanggal</TableHead>
+            <TableHead>Waktu</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Lokasi</TableHead>
+            <TableHead>Aksi</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
           {Array.from({ length: 10 }).map((_, i) => (
             <TableRow key={i}>
-              {Array.from({ length: 7 }).map((_, j) => (
+              {Array.from({ length: 8 }).map((_, j) => (
                 <TableCell key={j}>
                   <Skeleton className="h-6 w-full" />
                 </TableCell>

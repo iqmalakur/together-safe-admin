@@ -11,10 +11,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { RecentIncident } from "@/types/incident-type";
+import { IncidentResponse } from "@/app/api/incidents/type";
 
-export function RecentIncidents() {
-  const [data, setData] = useState<RecentIncident[]>([]);
+export function IncidentTable() {
+  const [data, setData] = useState<IncidentResponse[]>([]);
 
   useEffect(() => {
     fetch("/api/incidents")
@@ -29,7 +29,7 @@ export function RecentIncidents() {
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="px-6 py-4 sm:px-7 sm:py-5 xl:px-8.5">
         <h2 className="text-2xl font-bold text-dark dark:text-white">
-          Insiden Terbaru
+          Daftar Insiden
         </h2>
       </div>
 
@@ -39,8 +39,8 @@ export function RecentIncidents() {
             <TableHead className="pl-5 sm:pl-6 xl:pl-7.5">#</TableHead>
             <TableHead>Kategori</TableHead>
             <TableHead>Tingkat Risiko</TableHead>
-            <TableHead>Rentang Tanggal</TableHead>
-            <TableHead>Rentang Waktu</TableHead>
+            <TableHead>Tanggal</TableHead>
+            <TableHead>Waktu</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Lokasi</TableHead>
             <TableHead>Aksi</TableHead>
@@ -65,7 +65,7 @@ export function RecentIncidents() {
                     { label: "Sedang", value: "medium" },
                     { label: "Rendah", value: "low" },
                   ]}
-                  defaultValue={incident.risk_level}
+                  defaultValue={incident.riskLevel}
                   onChange={(value) => {
                     fetch(`/api/incidents/${incident.id}`, {
                       method: "PATCH",

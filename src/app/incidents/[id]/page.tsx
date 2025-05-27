@@ -1,5 +1,5 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { RecentIncidentsSkeleton } from "@/components/Tables/recent-incidents/skeleton";
+import { RecentIncidentsSkeleton } from "@/app/incidents/skeleton";
 
 import { Metadata } from "next";
 import { FC, Suspense } from "react";
