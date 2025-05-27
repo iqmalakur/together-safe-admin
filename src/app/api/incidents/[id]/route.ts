@@ -1,5 +1,16 @@
 import { getPrismaClient } from "@/utils/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import {
+  IncidentDetailResponse,
+  IncidentDetailResult,
+  IncidentReportResult,
+} from "./type";
+import {
+  getDateRange,
+  getFormattedDate,
+  getTimeRange,
+  getTimeString,
+} from "@/utils/date-utils";
 
 export async function GET(
   req: Request,
@@ -9,52 +20,58 @@ export async function GET(
     const prisma = getPrismaClient();
     const { id } = await params;
 
-    // Query untuk mengambil data insiden
-    const incident = await prisma.$queryRaw<any>`
+    const incidentResult = await prisma.$queryRaw<IncidentDetailResult[]>`
       SELECT
         i.id,
-        i.risk_level AS riskLevel,
+        i.risk_level,
         i.status,
-        TO_CHAR(i.created_at, 'YYYY-MM-DD"T"HH24:MI:SS"Z"') AS createdAt,
-        TO_CHAR(i.updated_at, 'YYYY-MM-DD"T"HH24:MI:SS"Z"') AS updatedAt,
-        TO_CHAR(i.date_start, 'YYYY-MM-DD') AS dateStart,
-        TO_CHAR(i.date_end, 'YYYY-MM-DD') AS dateEnd,
-        TO_CHAR(i.time_start, 'HH24:MI') AS timeStart,
-        TO_CHAR(i.time_end, 'HH24:MI') AS timeEnd,
-        c.name AS category
+        c.name AS category,
+        i.date_start,
+        i.date_end,
+        i.time_start,
+        i.time_end,
+        CONCAT(ST_Y(location), ',', ST_X(location)) as location
       FROM "Incident" i
       JOIN "IncidentCategory" c ON i.category_id = c.id
       WHERE i.id = ${id}::uuid
+      LIMIT 1
     `;
 
-    if (!incident.length) {
+    const incident = incidentResult[0];
+
+    if (!incident) {
       return NextResponse.json(
         { error: "Incident not found" },
         { status: 404 },
       );
     }
 
-    // Query untuk mengambil laporan terkait insiden
-    const reports = await prisma.$queryRaw<any>`
-      SELECT
-        r.id,
-        r.description,
-        TO_CHAR(r.date, 'YYYY-MM-DD') AS date,
-        TO_CHAR(r.time, 'HH24:MI') AS time,
-        u.name AS reporter
-      FROM "Report" r
-      JOIN "User" u ON r.user_email = u.email
-      WHERE r.incident_id = ${id}::uuid
-      ORDER BY r.created_at DESC
-    `;
+    const reports = await prisma.report.findMany({
+      where: { incidentId: id },
+      select: {
+        id: true,
+        description: true,
+        date: true,
+        time: true,
+        isAnonymous: true,
+        user: { select: { name: true } },
+      },
+    });
 
-    // Menggabungkan data insiden dengan laporan
-    const responseData = {
-      ...incident[0],
-      reports,
-    };
-
-    return NextResponse.json(responseData);
+    return NextResponse.json<IncidentDetailResponse>({
+      id: incident.id,
+      riskLevel: incident.risk_level,
+      status: incident.status,
+      category: incident.category,
+      date: getDateRange(incident.date_start, incident.date_end),
+      time: getTimeRange(incident.time_start, incident.time_end),
+      location: incident.location,
+      reports: reports.map((report) => ({
+        ...report,
+        date: getFormattedDate(report.date),
+        time: getTimeString(report.time, true),
+      })),
+    });
   } catch (error) {
     console.error("[GET /api/incidents/:id]", error);
     return NextResponse.json(
