@@ -17,12 +17,18 @@ export function IncidentTable() {
   const [data, setData] = useState<IncidentResponse[]>([]);
 
   useEffect(() => {
-    fetch("/api/incidents")
-      .then((res) => res.json())
-      .then((json) => setData(json.data))
-      .catch((err) => {
-        console.error("Gagal mengambil data insiden:", err);
-      });
+    const fetchIncident = async () => {
+      try {
+        const res = await fetch("/api/incidents");
+        if (!res.ok) throw new Error("Failed to fetch incident data");
+        const data = await res.json();
+        setData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchIncident();
   }, []);
 
   return (
@@ -42,7 +48,6 @@ export function IncidentTable() {
             <TableHead>Tanggal</TableHead>
             <TableHead>Waktu</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead>Lokasi</TableHead>
             <TableHead>Aksi</TableHead>
           </TableRow>
         </TableHeader>
@@ -96,15 +101,6 @@ export function IncidentTable() {
                     });
                   }}
                 />
-              </TableCell>
-              <TableCell>
-                <Link
-                  href={`https://www.google.com/maps?q=${incident.location}`}
-                  target="_blank"
-                  className="text-primary"
-                >
-                  Lihat
-                </Link>
               </TableCell>
               <TableCell>
                 <Link
