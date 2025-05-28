@@ -1,10 +1,6 @@
 import { getPrismaClient } from "@/utils/prisma";
 import { NextRequest, NextResponse } from "next/server";
-import {
-  IncidentDetailResponse,
-  IncidentDetailResult,
-  IncidentReportResult,
-} from "./type";
+import { IncidentDetailResponse, IncidentDetailResult } from "./type";
 import {
   getDateRange,
   getFormattedDate,
@@ -68,7 +64,7 @@ export async function GET(
       location: incident.location,
       reports: reports.map((report) => ({
         ...report,
-        date: getFormattedDate(report.date),
+        date: getFormattedDate(report.date, true),
         time: getTimeString(report.time, true),
       })),
     });
@@ -90,17 +86,15 @@ export async function PATCH(
   const { status, riskLevel } = body;
 
   try {
-    let update = "";
-
-    if (status) update += `status = '${status}'::"IncidentStatus",`;
-    if (riskLevel) update += `risk_level = '${riskLevel}'::"RiskLevel",`;
-
     const prisma = getPrismaClient();
-    const updated = await prisma.$executeRawUnsafe(`
-      UPDATE "Incident"
-        SET ${update} updated_at = NOW()
-      WHERE id = '${id}'::uuid
-    `);
+    const updated = await prisma.incident.update({
+      where: { id },
+      data: {
+        status,
+        riskLevel,
+        updatedAt: new Date(),
+      },
+    });
 
     return NextResponse.json({ message: "Status updated", data: updated });
   } catch (error) {
