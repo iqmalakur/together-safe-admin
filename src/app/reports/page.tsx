@@ -1,5 +1,5 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { RecentIncidentsSkeleton } from "@/app/incidents/skeleton";
+import { IncidentTableSkeleton } from "@/app/incidents/skeleton";
 import AdminReports from "@/components/Tables/recent-reports";
 
 import { Metadata } from "next";
@@ -15,7 +15,7 @@ const IncidentsPage = () => {
       <Breadcrumb pageName="Daftar Insiden" />
 
       <div className="space-y-10">
-        <Suspense fallback={<RecentIncidentsSkeleton />}>
+        <Suspense fallback={<IncidentTableSkeleton />}>
           <AdminReports />
         </Suspense>
       </div>

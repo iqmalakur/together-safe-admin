@@ -1,6 +1,4 @@
-"use client";
-
-import { IncidentDetailResponse } from "@/app/api/incidents/[id]/type";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -9,40 +7,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  getRiskLevel,
-  getRiskLevelColor,
-  getStatus,
-  getStatusColor,
-} from "@/utils/common";
 import Link from "next/link";
-import { FC, useEffect, useState } from "react";
-import { IncidentDetailSkeleton } from "./skeleton";
 
-interface IncidentDetailProps {
-  incidentId: string;
-}
-
-const IncidentDetail: FC<IncidentDetailProps> = ({ incidentId }) => {
-  const [incident, setIncident] = useState<IncidentDetailResponse | null>(null);
-
-  useEffect(() => {
-    const fetchIncident = async () => {
-      try {
-        const res = await fetch(`/api/incidents/${incidentId}`);
-        if (!res.ok) throw new Error("Failed to fetch incident data");
-        const data = await res.json();
-        setIncident(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    if (incidentId) fetchIncident();
-  }, [incidentId]);
-
-  if (!incident) return <IncidentDetailSkeleton />;
-
+export function IncidentDetailSkeleton() {
   return (
     <>
       <div className="rounded-[10px] bg-white p-6 shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -52,9 +19,9 @@ const IncidentDetail: FC<IncidentDetailProps> = ({ incidentId }) => {
               Risk Level
             </p>
             <span
-              className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${getRiskLevelColor(incident.riskLevel)}`}
+              className={`inline-block rounded-full px-3 py-1 text-sm font-semibold`}
             >
-              {getRiskLevel(incident.riskLevel)}
+              ...
             </span>
           </div>
 
@@ -63,9 +30,9 @@ const IncidentDetail: FC<IncidentDetailProps> = ({ incidentId }) => {
               Status
             </p>
             <span
-              className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${getStatusColor(incident.status)}`}
+              className={`inline-block rounded-full px-3 py-1 text-sm font-semibold`}
             >
-              {getStatus(incident.status)}
+              ...
             </span>
           </div>
 
@@ -73,21 +40,21 @@ const IncidentDetail: FC<IncidentDetailProps> = ({ incidentId }) => {
             <p className="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">
               Tanggal
             </p>
-            <p className="text-gray-900 dark:text-white">{incident.date}</p>
+            <p className="text-gray-900 dark:text-white">...</p>
           </div>
 
           <div>
             <p className="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">
               Waktu
             </p>
-            <p className="text-gray-900 dark:text-white">{incident.time}</p>
+            <p className="text-gray-900 dark:text-white">...</p>
           </div>
 
           <div>
             <p className="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">
               Kategori
             </p>
-            <p className="text-gray-900 dark:text-white">{incident.category}</p>
+            <p className="text-gray-900 dark:text-white">...</p>
           </div>
 
           <div className="sm:col-span-2">
@@ -96,7 +63,7 @@ const IncidentDetail: FC<IncidentDetailProps> = ({ incidentId }) => {
             </p>
             <div className="flex flex-wrap items-center gap-2">
               <Link
-                href={`https://www.google.com/maps?q=${incident.location}`}
+                href={`https://www.google.com/maps?q=`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-blue-700"
@@ -125,28 +92,13 @@ const IncidentDetail: FC<IncidentDetailProps> = ({ incidentId }) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {incident.reports.map((report, index) => (
-                <TableRow
-                  key={report.id}
-                  className="text-base font-medium text-dark dark:text-white"
-                >
-                  <TableCell className="pl-5 sm:pl-6 xl:pl-7.5">
-                    {index + 1}
-                  </TableCell>
-                  <TableCell>{report.description}</TableCell>
-                  <TableCell>{report.date}</TableCell>
-                  <TableCell>{report.time}</TableCell>
-                  <TableCell>
-                    {report.isAnonymous ? "Anonim" : report.user.name}
-                  </TableCell>
-                  <TableCell>
-                    <Link
-                      href={`/reports/${report.id}`}
-                      className="text-primary"
-                    >
-                      Detail
-                    </Link>
-                  </TableCell>
+              {Array.from({ length: 10 }).map((_, i) => (
+                <TableRow key={i}>
+                  {Array.from({ length: 6 }).map((_, j) => (
+                    <TableCell key={j}>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                  ))}
                 </TableRow>
               ))}
             </TableBody>
@@ -155,6 +107,4 @@ const IncidentDetail: FC<IncidentDetailProps> = ({ incidentId }) => {
       </div>
     </>
   );
-};
-
-export default IncidentDetail;
+}

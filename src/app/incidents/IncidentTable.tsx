@@ -12,17 +12,18 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import { IncidentResponse } from "@/app/api/incidents/type";
+import { IncidentTableSkeleton } from "./skeleton";
 
 export function IncidentTable() {
-  const [data, setData] = useState<IncidentResponse[]>([]);
+  const [incidents, setIncidents] = useState<IncidentResponse[] | null>(null);
 
   useEffect(() => {
     const fetchIncident = async () => {
       try {
         const res = await fetch("/api/incidents");
         if (!res.ok) throw new Error("Failed to fetch incident data");
-        const data = await res.json();
-        setData(data);
+        const incidents = await res.json();
+        setIncidents(incidents);
       } catch (error) {
         console.error(error);
       }
@@ -30,6 +31,8 @@ export function IncidentTable() {
 
     fetchIncident();
   }, []);
+
+  if (incidents === null) return <IncidentTableSkeleton />;
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -53,7 +56,7 @@ export function IncidentTable() {
         </TableHeader>
 
         <TableBody>
-          {data.map((incident, index) => (
+          {incidents.map((incident, index) => (
             <TableRow
               key={incident.id}
               className="text-base font-medium text-dark dark:text-white"
@@ -114,6 +117,12 @@ export function IncidentTable() {
           ))}
         </TableBody>
       </Table>
+
+      {incidents.length === 0 && (
+        <div className="p-6 text-center text-body-2xlg font-semibold text-gray">
+          Tidak ada data insiden
+        </div>
+      )}
     </div>
   );
 }

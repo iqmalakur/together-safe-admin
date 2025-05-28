@@ -1,5 +1,5 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { RecentIncidentsSkeleton } from "@/app/incidents/skeleton";
+import { IncidentTableSkeleton } from "@/app/incidents/skeleton";
 
 import { Metadata } from "next";
 import { FC, Suspense } from "react";
@@ -20,7 +20,7 @@ const IncidentDetailPage: FC<{ params: { id: string } }> = async ({
       <Breadcrumb pageName="Detail Insiden" />
 
       <div className="space-y-10">
-        <Suspense fallback={<RecentIncidentsSkeleton />}>
+        <Suspense fallback={<IncidentTableSkeleton />}>
           <ReportDetail reportId={id} />
         </Suspense>
       </div>

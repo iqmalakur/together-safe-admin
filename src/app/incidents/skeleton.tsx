@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export function RecentIncidentsSkeleton() {
+export function IncidentTableSkeleton() {
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="px-6 py-4 sm:px-7 sm:py-5 xl:px-8.5">
@@ -26,7 +26,6 @@ export function RecentIncidentsSkeleton() {
             <TableHead>Tanggal</TableHead>
             <TableHead>Waktu</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead>Lokasi</TableHead>
             <TableHead>Aksi</TableHead>
           </TableRow>
         </TableHeader>
@@ -34,7 +33,7 @@ export function RecentIncidentsSkeleton() {
         <TableBody>
           {Array.from({ length: 10 }).map((_, i) => (
             <TableRow key={i}>
-              {Array.from({ length: 8 }).map((_, j) => (
+              {Array.from({ length: 7 }).map((_, j) => (
                 <TableCell key={j}>
                   <Skeleton className="h-6 w-full" />
                 </TableCell>
