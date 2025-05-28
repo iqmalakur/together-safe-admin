@@ -45,6 +45,14 @@ const IncidentDetail: FC<IncidentDetailProps> = ({ incidentId }) => {
 
   return (
     <>
+      <div className="flex justify-end">
+        <Link
+          href="/incidents"
+          className="inline-flex items-center gap-2 rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+        >
+          ← Kembali
+        </Link>
+      </div>
       <div className="rounded-[10px] bg-white p-6 shadow-1 dark:bg-gray-dark dark:shadow-card">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
