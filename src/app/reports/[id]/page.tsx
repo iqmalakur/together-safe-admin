@@ -1,13 +1,12 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { IncidentTableSkeleton } from "@/app/incidents/skeleton";
 
 import { Metadata } from "next";
 import { FC, Suspense } from "react";
-import IncidentDetail from "./ReportDetail";
-import ReportDetail from "./ReportDetail";
+import IncidentReportDetail from "./IncidentReportDetail";
+import { IncidentReportDetailSkeleton } from "./skeleton";
 
 export const metadata: Metadata = {
-  title: "Reports",
+  title: "Detail Laporan Insiden",
 };
 
 const IncidentDetailPage: FC<{ params: { id: string } }> = async ({
@@ -17,11 +16,11 @@ const IncidentDetailPage: FC<{ params: { id: string } }> = async ({
 
   return (
     <>
-      <Breadcrumb pageName="Detail Insiden" />
+      <Breadcrumb pageName="Detail Laporan Insiden" />
 
       <div className="space-y-10">
-        <Suspense fallback={<IncidentTableSkeleton />}>
-          <ReportDetail reportId={id} />
+        <Suspense fallback={<IncidentReportDetailSkeleton />}>
+          <IncidentReportDetail reportId={id} />
         </Suspense>
       </div>
     </>

@@ -1,5 +1,12 @@
+import {
+  getDateRange,
+  getFormattedDate,
+  getTimeRange,
+  getTimeString,
+} from "@/utils/date-utils";
 import { getPrismaClient } from "@/utils/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { IncidentReportDetailResponse } from "./type";
 
 export async function GET(
   req: NextRequest,
@@ -16,11 +23,19 @@ export async function GET(
 
     const report = await prisma.report.findUnique({
       where: { id },
-      include: {
+      select: {
+        id: true,
+        description: true,
+        date: true,
+        time: true,
+        isAnonymous: true,
+        latitude: true,
+        longitude: true,
         user: { select: { name: true } },
         incident: {
           select: {
             id: true,
+            category: { select: { name: true } },
             riskLevel: true,
             status: true,
             dateStart: true,
@@ -36,13 +51,22 @@ export async function GET(
       return NextResponse.json({ error: "Report not found" }, { status: 404 });
     }
 
-    return NextResponse.json({
+    return NextResponse.json<IncidentReportDetailResponse>({
       id: report.id,
       description: report.description,
-      date: report.date.toISOString().split("T")[0],
-      time: report.time,
-      reporter: report.user.name,
-      incident: report.incident || null,
+      date: getFormattedDate(report.date),
+      time: getTimeString(report.time),
+      user: report.user,
+      location: `${report.latitude},${report.longitude}`,
+      isAnonymous: report.isAnonymous,
+      incident: {
+        id: report.incident.id,
+        category: report.incident.category,
+        riskLevel: report.incident.riskLevel,
+        status: report.incident.status,
+        date: getDateRange(report.incident.dateStart, report.incident.dateEnd),
+        time: getTimeRange(report.incident.timeStart, report.incident.timeEnd),
+      },
     });
   } catch (error) {
     console.error("[GET /api/reports/[id]]", error);
