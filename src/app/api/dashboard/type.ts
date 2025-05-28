@@ -9,6 +9,12 @@ export type CategoryTren = {
   amount: number;
 };
 
+export type ReportWeekResult = {
+  day: string;
+  count: number;
+};
+
 export type DashboardResponse = {
   categoryTren: CategoryTren[];
+  reportWeek: ReportWeekResult[];
 };

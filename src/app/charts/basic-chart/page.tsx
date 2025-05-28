@@ -1,5 +1,5 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { CampaignVisitors } from "@/components/Charts/campaign-visitors";
+import { ReportWeek } from "@/app/(home)/_components/ReportWeek";
 import { IncidentCategoryTren } from "@/app/(home)/_components/IncidentCategoryTren";
 import { createTimeFrameExtractor } from "@/utils/timeframe-extractor";
 import { Metadata } from "next";
@@ -30,7 +30,7 @@ export default async function Page(props: PropsType) {
         />
 
         <div className="col-span-12 xl:col-span-5">
-          <CampaignVisitors />
+          <ReportWeek />
         </div>
       </div>
     </>

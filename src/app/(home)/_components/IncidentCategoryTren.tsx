@@ -2,25 +2,14 @@
 
 import { cn } from "@/lib/utils";
 import { DonutChart } from "./DonutChart";
-import { useEffect, useState } from "react";
 import { DashboardResponse } from "@/app/api/dashboard/type";
 
 type PropsType = {
+  data: DashboardResponse | null;
   className?: string;
 };
 
-export function IncidentCategoryTren({ className }: PropsType) {
-  const [data, setData] = useState<DashboardResponse | null>(null);
-
-  useEffect(() => {
-    fetch("/api/dashboard")
-      .then((res) => res.json())
-      .then((json) => setData(json))
-      .catch((err) => {
-        console.error("Gagal mengambil data laporan:", err);
-      });
-  }, []);
-
+export function IncidentCategoryTren({ data, className }: PropsType) {
   return (
     <div
       className={cn(

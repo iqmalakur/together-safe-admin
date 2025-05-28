@@ -14,7 +14,7 @@ const Chart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
-export function CampaignVisitorsChart({ data }: PropsType) {
+export function ReportWeekChart({ data }: PropsType) {
   const options: ApexOptions = {
     colors: ["#5750F1"],
     chart: {
@@ -78,12 +78,12 @@ export function CampaignVisitorsChart({ data }: PropsType) {
         options={options}
         series={[
           {
-            name: "Visitors",
+            name: "Laporan",
             data,
           },
         ]}
         type="bar"
-        height={230}
+        height={300}
       />
     </div>
   );
