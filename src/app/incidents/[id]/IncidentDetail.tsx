@@ -55,6 +55,13 @@ const IncidentDetail: FC<IncidentDetailProps> = ({ incidentId }) => {
       </div>
       <div className="rounded-[10px] bg-white p-6 shadow-1 dark:bg-gray-dark dark:shadow-card">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <p className="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">
+              Kategori
+            </p>
+            <p className="text-gray-900 dark:text-white">{incident.category}</p>
+          </div>
+
           <div>
             <p className="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">
               Risk Level
@@ -89,13 +96,6 @@ const IncidentDetail: FC<IncidentDetailProps> = ({ incidentId }) => {
               Waktu
             </p>
             <p className="text-gray-900 dark:text-white">{incident.time}</p>
-          </div>
-
-          <div>
-            <p className="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">
-              Kategori
-            </p>
-            <p className="text-gray-900 dark:text-white">{incident.category}</p>
           </div>
 
           <div className="sm:col-span-2">

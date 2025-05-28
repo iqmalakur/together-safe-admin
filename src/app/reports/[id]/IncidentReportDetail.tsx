@@ -50,10 +50,6 @@ const IncidentReportDetail: FC<ReportDetailProps> = ({ reportId }) => {
       </div>
 
       <div className="rounded-[10px] bg-white p-6 shadow-1 dark:bg-gray-dark dark:shadow-card">
-        <h2 className="mb-6 text-2xl font-bold text-dark dark:text-white">
-          Detail Laporan Insiden
-        </h2>
-
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <p className="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">
