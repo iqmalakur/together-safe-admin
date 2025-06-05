@@ -22,6 +22,12 @@ export const NAV_DATA = [
         icon: Icons.ReportIcon,
         items: [],
       },
+      {
+        title: "Logout",
+        url: "/logout",
+        icon: Icons.Authentication,
+        items: [],
+      },
     ],
   },
 ];

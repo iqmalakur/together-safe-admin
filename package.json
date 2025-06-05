@@ -15,6 +15,7 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "flatpickr": "^4.6.13",
+    "jsonwebtoken": "^9.0.2",
     "jsvectormap": "^1.6.0",
     "next": "15.1.6",
     "next-themes": "^0.4.4",
@@ -25,6 +26,7 @@
     "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22",
     "@types/react": "19.0.8",
     "@types/react-dom": "19.0.3",

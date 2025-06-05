@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
-import React from "react";
+import React, { ReactNode } from "react";
 import { AlertErrorIcon, AlertSuccessIcon, AlertWarningIcon } from "./icons";
 
 const alertVariants = cva(
@@ -28,7 +28,7 @@ const icons = {
 type AlertProps = React.HTMLAttributes<HTMLDivElement> & {
   variant: "error" | "success" | "warning";
   title: string;
-  description: string;
+  description: ReactNode;
 };
 
 const Alert = ({
