@@ -55,7 +55,7 @@ export async function GET(
       id: report.id,
       description: report.description,
       date: getFormattedDate(report.date),
-      time: getTimeString(report.time),
+      time: getTimeString(report.time, true),
       user: report.user,
       location: `${report.latitude},${report.longitude}`,
       isAnonymous: report.isAnonymous,
