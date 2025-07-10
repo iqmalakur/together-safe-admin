@@ -8,10 +8,7 @@ import { getPrismaClient } from "@/utils/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { IncidentReportDetailResponse } from "./type";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } },
-) {
+export async function GET(req: NextRequest, { params }: any) {
   try {
     const { id } = await params;
 

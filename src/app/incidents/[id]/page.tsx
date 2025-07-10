@@ -9,9 +9,7 @@ export const metadata: Metadata = {
   title: "Detail Insiden",
 };
 
-const IncidentDetailPage: FC<{ params: { id: string } }> = async ({
-  params,
-}) => {
+const IncidentDetailPage: FC<any> = async ({ params }) => {
   const { id } = await params;
 
   return (

@@ -8,10 +8,7 @@ import {
   getTimeString,
 } from "@/utils/date-utils";
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } },
-) {
+export async function GET(req: Request, { params }: any) {
   try {
     const prisma = getPrismaClient();
     const { id } = await params;
@@ -77,10 +74,7 @@ export async function GET(
   }
 }
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: { id: string } },
-) {
+export async function PATCH(req: NextRequest, { params }: any) {
   const { id } = await params;
   const body = await req.json();
   const { status, riskLevel } = body;
